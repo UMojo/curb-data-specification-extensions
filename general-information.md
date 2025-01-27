@@ -13,6 +13,8 @@ This document contains specifications and common concepts that are shared betwee
 - [Geographic Data](#geographic-data)
   - [Geographic Telemetry Data](geographic-telemetry-data)
   - [Polygon](#polygon)
+  - [LineString](#linestring)
+  - [Point](#Point)
   - [Intersection Operation](#intersection-operation)
 - [Pagination](#pagination)
 - [Range Boundaries](#range-boundaries)
@@ -42,7 +44,7 @@ More info on how to document [Bearer Auth in swagger](https://swagger.io/docs/sp
 
 JSON Web Token ([JWT](https://jwt.io/introduction/)) is **RECOMMENDED** as the token format.
 
-JWTs provide a safe, secure way to verify the identity of an agency and provide access to MDS resources without providing access to other, potentially sensitive data.
+JWTs provide a safe, secure way to verify the identity of an agency and provide access to CDS resources without providing access to other, potentially sensitive data.
 
 > JSON Web Token (JWT) is an open standard ([RFC 7519](https://tools.ietf.org/html/rfc7519)) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
 
@@ -101,7 +103,7 @@ Because of unreliability of some device clocks and other factors, sensors and op
 
 # Geographic Data
 
-References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. 
+References to geographic datatypes (Point, MultiPolygon, LineString, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. 
 
 ## Geographic Telemetry Data
 
@@ -153,6 +155,36 @@ A polygon is a GeoJSON geometry of type `"Polygon"` as defined in
     [-73.958416, 40.800686],
     [-73.982105, 40.767932]
   ]]
+}
+```
+
+## LineString
+
+A linestring is a GeoJSON geometry of type `"LineString"` (polyline) as defined in
+[RFC 7946 3.1.6](https://www.ietf.org/rfc/rfc7946.txt). An example linestring is:
+
+```
+{
+  "type": "LineString",
+  "coordinates": [[
+    [-73.982105, 40.767932],
+    [-73.973694, 40.764551],
+    [-73.970913, 40.763627]
+  ]]
+}
+```
+
+## Point
+
+A point is a GeoJSON geometry of type `"Point"` as defined in
+[RFC 7946 3.1.6](https://www.ietf.org/rfc/rfc7946.txt). An example point is:
+
+```
+{
+  "type": "Point",
+  "coordinates": [
+    -73.982105, 40.767932
+   ]
 }
 ```
 
@@ -267,7 +299,7 @@ header but does not include this value; it MUST respond with a status of `406 No
 
 # Schema
 
-There is no validation schema for the first release of CDS. A schema and/or digital definition will come in a future CDS release as the spec is refined after real-world usage and feedback. To leave your thoughts and follow along, see this [discussion issue](https://github.com/openmobilityfoundation/curb-data-specification/issues/87).
+For CDS data and feed validation, please see the [OpenAPI schema description](https://github.com/openmobilityfoundation/cds-openapi). Interactive OpenAPI documentation for the CDS APIs, endpoints, fields, and data objects is also available on OMF's [Stoplight Interactive Documentation](https://openmobilityfnd.stoplight.io/docs/cds-openapi/83teyinnn1py6-curb-api) page.
 
 [Top][toc]
 
