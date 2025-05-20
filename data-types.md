@@ -17,7 +17,7 @@ An `external_reference` is a JSON array with the following fields within objects
 | `data_feed_url` | URL | Required | An identifier for the source of the publicly or privately accessible data feed. This MUST be a full HTTPS URL pointing to the data feed which contains more information about the underlying work zone impacting the CDS place. |
 | `name` | String | Optional | Name of the data feed for reference. E.g. "WZDz", "CWZ", "MDS", "GBFS", "GTFS", "CDS". |
 | `field_name` | String | Optional | The name of the data field that is referenced by `feature_ids`. E.g. "trip_id". |
-| `feature_ids` | Array | Optional | An array of one or more **ids** strings of a data feed that impacts the use of or relationship to a curb zone. The **ids** details are be provided in the referenced `data_feed_url`. |
+| `feature_ids` | Array | Optional | An array of one or more **ids** strings of a data feed that impacts the use of or relationship to part of CDS, e.g. a curb zone or space. The **ids** details are be provided in the referenced `data_feed_url`. |
 
 [Top][toc]
 
