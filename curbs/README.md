@@ -60,7 +60,6 @@ There are four different endpoints that are part of the Curbs API:
     - [Time Span](#time-span)
     - [Rate](#rate) 
   - [Location Reference](#location-reference)
-  - [External Reference](#external-reference)
   - [Previous Policy](#previous-policy)
 - [Examples](#examples)
 - [Schema](#schema)
@@ -312,7 +311,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `curb_area_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Areas](#curb-area) that this Curb Zone is a part of. If specified, the areas identified MUST be retrievable through the Curb API and its geographical area MUST contain that of the Curb Zone. |
 | `curb_space_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Spaces](#curb-space) that this Curb Zone contains. If specified, the spaces identified MUST be retrievable through the Curb API and its geographical area MUST be contained in this Curb Zone. |
 | `curb_object_ids` | Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Objects](#curb-object) that this Curb Zone is related to, in particular what Objects are in the Zone's areas of influence. For example, a pay station being used for multiple paid parking zones, a locker for a commercial loading zone, or a camera monitoring several zones. If specified, the objects identified MUST be retrievable through the Curb API. Curb Objects can be related to a Curb Space or a Curb Zone. |
-| `external_references` | Array of [External Reference](#external-reference) objects | Optional | One or more references to external data feeds impacting this Curb Zone. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Zone. |
 
 [Top][toc]
 
@@ -346,7 +345,7 @@ A Curb Area is represented as a JSON object, whose fields are as follows:
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb area was first published in this data feed. |
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb area were last updated. This helps consumers know that some fields may have changed. |
 | `curb_zone_ids` | Array of [UUIDs][uuid] | Required | The IDs of all the Curb Zones included within this Curb Area at the requested time.	|
-| `external_references` | Array of [External Reference](#external-reference) objects | Optional | One or more references to external data feeds impacting this Curb Zone. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Zone. |
 
 [Top][toc]
 
@@ -374,7 +373,7 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 | `width` | Integer | Optional | Width in centimeters of this Space. | If comparing the length of a vehicle to that of a space, note that vehicles may have to account for a buffer for doors, mirrors, bumpers, ramps, etc. |
 | `available` | Boolean | Optional | Whether this space is available for vehicles to park in at the specified time  (‘True’ means the Space is available). |
 | `availability_time` | [Timestamp][ts] | Optional | If availability information is present, the most recent time that availability was computed for this space. |
-| `external_references` | Array of [External Reference](#external-reference) objects | Optional | One or more references to external data feeds impacting this Curb Zone. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Zone. |
 
 [Top][toc]
 
@@ -410,8 +409,7 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 | `max_height` | Integer | Optional | Maximum, bounding box height of the object from the sidewalk/street surface, in centimeters. |
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb object was first published in this data feed. |
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb object were last updated. This helps consumers know that some fields may have changed. |
-| `external_object_id` | String | Optional | A unique identifier for this object from an external source, like `external_object_url`. |
-| `external_object_url` | URL | Optional | A URL link to a data feed that contains the `external_object_id`. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Zone. |
 
 [Top][toc]
 
@@ -640,20 +638,6 @@ A Location Reference is a JSON object with the following fields:
 
 [Top][toc]
 
-## External Reference
-
-An External Reference object describes a specific feature from a data feed or API that is relevant to the curb place via an external reference. This allows CDS users to reference other data feeds that impact the area, and see full details in the agency's data feed. Data feeds can be any existing standard (MDS, WzDX, CWZ, GTFS, GBFS, etc) or a custom feed.
-
-An `external_reference` is a JSON array with the following fields within objects:
-
-| Name   | Type   | Required/Optional   | Description   |
-| ------ | ------ | ------------------- | ------------- |
-| `data_feed_url` | URL | Required | An identifier for the source of the publicly or privately accessible data feed. This MUST be a full HTTPS URL pointing to the data feed which contains more information about the underlying work zone impacting the CDS place. |
-| `field_name` | String | Required | The name of the data field that is referenced by `feature_ids`. E.g. "trip_id". |
-| `feature_ids` | Array | Required | An array of one or more **ids** strings of a data feed that impacts the use of or relationship to a curb zone. The **ids** details are be provided in the referenced `data_feed_url`. |
-
-[Top][toc]
-
 ## Previous Policy
 
 An array of information about what previous policies applied to a [curb zone](#curb-zone) and when. This allows cities to historically track what policies applied to a curb zone.
@@ -680,6 +664,7 @@ For details on the CDS schema in OpenAPI format and on Stoplight, please referen
 
 [Top][toc]
 
+[external-reference]: ../data-types.md#external-reference
 [toc]: #table-of-contents
 [uuid]: /general-information.md#uuid
 [ts]: /general-information.md#timestamp
