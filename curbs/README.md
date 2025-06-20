@@ -311,7 +311,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `curb_area_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Areas](#curb-area) that this Curb Zone is a part of. If specified, the areas identified MUST be retrievable through the Curb API and its geographical area MUST contain that of the Curb Zone. |
 | `curb_space_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Spaces](#curb-space) that this Curb Zone contains. If specified, the spaces identified MUST be retrievable through the Curb API and its geographical area MUST be contained in this Curb Zone. |
 | `curb_object_ids` | Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Objects](#curb-object) that this Curb Zone is related to, in particular what Objects are in the Zone's areas of influence. For example, a pay station being used for multiple paid parking zones, a locker for a commercial loading zone, or a camera monitoring several zones. If specified, the objects identified MUST be retrievable through the Curb API. Curb Objects can be related to a Curb Space or a Curb Zone. |
-| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Zone. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Zone. References external data that is relevant to this Zone now. If the external reference is temporary, it should be added, then removed when no longer relevant.  This field can be changed without requiring a new `curb_zone_id`, as it does not impact the Zone's geographic definition.  |
 
 [Top][toc]
 
@@ -345,7 +345,7 @@ A Curb Area is represented as a JSON object, whose fields are as follows:
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb area was first published in this data feed. |
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb area were last updated. This helps consumers know that some fields may have changed. |
 | `curb_zone_ids` | Array of [UUIDs][uuid] | Required | The IDs of all the Curb Zones included within this Curb Area at the requested time.	|
-| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Zone. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Area. References external data that is relevant to this Area now. If the external reference is temporary, it should be added, then removed when no longer relevant. |
 
 [Top][toc]
 
@@ -373,7 +373,7 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 | `width` | Integer | Optional | Width in centimeters of this Space. | If comparing the length of a vehicle to that of a space, note that vehicles may have to account for a buffer for doors, mirrors, bumpers, ramps, etc. |
 | `available` | Boolean | Optional | Whether this space is available for vehicles to park in at the specified time  (‘True’ means the Space is available). |
 | `availability_time` | [Timestamp][ts] | Optional | If availability information is present, the most recent time that availability was computed for this space. |
-| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Zone. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Space. References external data that is relevant to this Space now. If the external reference is temporary, it should be added, then removed when no longer relevant. |
 
 [Top][toc]
 
@@ -409,7 +409,7 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 | `max_height` | Integer | Optional | Maximum, bounding box height of the object from the sidewalk/street surface, in centimeters. |
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb object was first published in this data feed. |
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb object were last updated. This helps consumers know that some fields may have changed. |
-| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Zone. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Object. References external data that is relevant to this Object now. If the external reference is temporary, it should be added, then removed when no longer relevant. |
 
 [Top][toc]
 
