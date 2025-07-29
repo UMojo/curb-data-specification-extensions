@@ -107,6 +107,8 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `event_time` | [Timestamp][ts] | Required | Time at which the event occurred. |
 | `event_publication_time` | [Timestamp][ts] | Required | Time at which the event became available for consumption by this API. |
 | `event_session_id` | [UUID][uuid] | Optional | May be provided to tie known connected `park_start` and `park_end` event types together by a unique session ID. If _not_ confident of being able to determine a `park_end` event at some time after `park_start` is recorded (i.e., you cannot detect when a vehicle departs), then do _not_ use session_id. This field may be most useful to payment companies who provide their source data as sessions (typical for transaction data). _Note also_: the use of the term "session" across CDS means the start and end of curb usage of a vehicle, not necessarily a financial or payment session or transaction. |
+| `event_metadata` | Array of [KeyValue](#key-value) objects | Optional | Additional provider-defined metadata key-value pairs describing attributes of the event. |
+| `event_metadata_schema` | URL | Optional | A URI referencing a schema that defines the structure of the event_metadata array. |
 | `curb_zone_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Zone where the event occurred. Required for events that occurred at a known Curb Zone for ALL _event_types_. |
 | `curb_area_ids` | Array of [UUID][uuid] | Conditionally Required | Unique IDs of the Curb Area where the event occurred. Since Curb Areas can overlap, an event may happen in more than one. Required for events that occurred in a known Curb Area, if known and used, for these event_types: _enter_area, exit_area, park_start, park_end_ |
 | `curb_space_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Space where the event occurred. Required for events that occurred at a known Curb Space, if known and used, for these event_types: _park_start, park_end, enter_area, exit_area_ |
@@ -232,6 +234,17 @@ General event purpose `event_purpose` that the vehicle performed during its even
 | `vehicle_parking`     | Includes private or commercial vehicle free or paid/metered parking |
 | `vending`             | Mobile vending or food truck curb uses |
 | `unspecified`         | Unknown or unspecified activity type |
+
+[Top][toc]
+
+### Key Value
+
+The `KeyValue` type represents a single metadata entry used to attach provider-defined information to events or other entities. This flexible structure supports extensible key-value pairs that may include vehicle attributes, computer vision classifications, confidence scores, and other contextual data.
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `key`  | String | Required | Name of the metadata field (e.g., `vehicle_color`, `sensor_classification`) |
+| `value` | String / Number / Boolean | Required | Value of the field. May be a string (e.g., `"red"`), number (e.g., `0.92`), or boolean (e.g., `true`) depending on the use case. |
 
 [Top][toc]
 
